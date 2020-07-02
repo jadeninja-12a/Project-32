@@ -3,6 +3,7 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Constraint = Matter.Constraint;
+var engine, world;
 var stand, slingshot;
 var block1, block2, block3, block4;
 var block5, block6, block7, block8;
@@ -32,22 +33,7 @@ function setup() {
   block14 = new Box(479, 210, 43, 35);
   block15 = new Box(522, 210, 43, 35);
   block16 = new Box(479, 175, 43, 35);
-  block1.color = "green";
-  block2.color = "green";
-  block3.color = "green";
-  block4.color = "green";
-  block5.color = "green";
-  block6.color = "green";
-  block7.color = "green";
-  block8.color = "yellow";
-  block9.color = "yellow";
-  block10.color = "yellow";
-  block11.color = "yellow";
-  block12.color = "yellow";
-  block13.color = "blue";
-  block14.color = "blue";
-  block15.color = "blue";
-  block16.color = "red";
+  
   stand = new Ground(479, 300, 400, 10)
   Engine.run(engine);
 }
@@ -87,4 +73,10 @@ function mouseDragged(){
 function mouseReleased(){
   t = false;
   slingshot.fly();
+}
+
+function keyPressed(){
+  if(keyCode == 32){
+      slingshot.attach(polygon);
+  }
 }

@@ -12,6 +12,10 @@ class SlingShot{
         World.add(world, this.sling);
     }
 
+    attach(n){
+        this.sling.bodyA = n;
+    }
+
     fly(){
         this.sling.bodyA = null;
     }
