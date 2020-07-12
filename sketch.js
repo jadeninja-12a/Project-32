@@ -3,6 +3,7 @@ const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
 const Constraint = Matter.Constraint;
+var isDay;
 var engine, world;
 var stand, slingshot;
 var block1, block2, block3, block4;
@@ -10,6 +11,7 @@ var block5, block6, block7, block8;
 var block9, block10, block11, block12;
 var block13, block14, block15, block16, polygon;
 var t = false;
+var score = 0;
 function setup() {
   createCanvas(800,400);
   engine = Engine.create();
@@ -36,11 +38,22 @@ function setup() {
   
   stand = new Ground(479, 300, 400, 10)
   Engine.run(engine);
+  setBackground();
 }
 
 function draw() {
-  background(0);  
+  
+  if(isDay){
+    background(255, 255, 0);  
+  } else if(!isDay){
+    background(0, 0, 255);
+  } 
   Engine.update(engine);
+  push();
+  fill("green");
+  textSize(32);
+  text("SCORE : " + score, 500, 50);
+  pop();
   block1.display();
   block2.display();
   block3.display();
@@ -57,6 +70,23 @@ function draw() {
   block13.display();
   block14.display();
   block15.display();
+  block1.score();
+  block2.score();
+  block3.score();
+  block4.score();
+  block5.score();
+  block6.score();
+  block7.score();
+  block10.score();
+  block12.score();
+  block8.score();
+  block9.score();
+  block11.score();
+  block16.score();
+  block13.score();
+  block14.score();
+  block15.score();
+  console.log(score);
   if(t){
     Matter.Body.setPosition(polygon, {x: mouseX, y: mouseY})
   }
@@ -78,5 +108,20 @@ function mouseReleased(){
 function keyPressed(){
   if(keyCode == 32){
       slingshot.attach(polygon);
+  }
+}
+async function setBackground(){
+  var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/kolkata");
+  var responseJSON = await response.json();
+
+  var datetime = responseJSON.datetime;
+  var hour = datetime.slice(11,13);
+  
+  if(hour>=06 && hour<19){
+      isDay = true;
+  }
+  else if ((hour >= 19 && hour <= 23)
+   && (hour >= 0 && hour < 6) ){
+    isDay = false;
   }
 }
